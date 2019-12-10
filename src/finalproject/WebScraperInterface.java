@@ -1,5 +1,6 @@
 package finalproject;
 
+import java.net.URL;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JFrame;
@@ -21,11 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JFileChooser;
 
-class ButtonHandler implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(null, "You clicked the button!");
-    }
-}
+
 
 public class WebScraperInterface extends JFrame implements ActionListener {
     private JTextArea text;
@@ -63,20 +60,39 @@ public class WebScraperInterface extends JFrame implements ActionListener {
         c.setLayout(new BorderLayout());
         JPanel panSouth = new JPanel();
         panSouth.setLayout(new FlowLayout());
+
         JButton btnSave = new JButton("Save to text");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Specify a file to save");
+				int selection = fileChooser.showSaveDialog(c);
+				if (selection == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+				}
+			}
+		});
+		
 		JButton btnJson = new JButton("Save to JSON");
-        ButtonHandler handler = new ButtonHandler();
-        btnSave.addActionListener(handler);  // the frame itself listens
+        
         panSouth.add(btnSave);
 		panSouth.add(btnJson);
         c.add(panSouth, BorderLayout.SOUTH);
 		
 		JPanel panNorth = new JPanel();
-		
-		//panNorth.setLayout(new FlowLayout());
 		JTextField urlField = new JTextField("", 20);
 		JButton btnFetch = new JButton("Fetch");
 		JLabel lblUrl = new JLabel("Enter URL:");
+		btnFetch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String addr = urlField.getText();
+				try {
+					URL link = new URL(addr);
+				} catch (Exception ex) {
+					
+				}
+			}
+		});
 		panNorth.add(lblUrl);
 		panNorth.add(urlField);
 		panNorth.add(btnFetch);

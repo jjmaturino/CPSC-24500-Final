@@ -1,4 +1,4 @@
-package PACKAGE_NAME;
+package finalproject;
 
 public class WebDataApp {
     public static void main(String[] args) {
