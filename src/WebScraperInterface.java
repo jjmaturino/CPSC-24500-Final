@@ -29,9 +29,7 @@ class ButtonHandler implements ActionListener {
 
 public class WebScraperInterface extends JFrame implements ActionListener {
     private JTextArea text;
-    public void fillTextArea(File file) {
 
-    }
     public void setupMenu() {
         JMenuBar mbar = new JMenuBar();
         JMenu mnuFile = new JMenu("File");
@@ -40,7 +38,8 @@ public class WebScraperInterface extends JFrame implements ActionListener {
 		JMenuItem miAbout = new JMenuItem("About");
 		miAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JOptionPane.showMessageDialog(null, "Web Scraper app created by"
+						+ "Pete Alvarez and Juan Maturino.");
 			}
 		});
                 
