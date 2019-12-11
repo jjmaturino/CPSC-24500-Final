@@ -1,5 +1,3 @@
-package finalproject;
-
 public class WebDataApp {
     public static void main(String[] args) {
         WebScraperInterface frm = new WebScraperInterface();

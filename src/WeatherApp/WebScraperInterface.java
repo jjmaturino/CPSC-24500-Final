@@ -1,4 +1,4 @@
-package finalproject;
+
 
 import java.net.URL;
 import javax.swing.JLabel;
@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;  // simple ready-made dialogs
@@ -61,23 +62,9 @@ public class WebScraperInterface extends JFrame implements ActionListener {
         JPanel panSouth = new JPanel();
         panSouth.setLayout(new FlowLayout());
 
-        JButton btnSave = new JButton("Save to text");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setDialogTitle("Specify a file to save");
-				int selection = fileChooser.showSaveDialog(c);
-				if (selection == JFileChooser.APPROVE_OPTION) {
-					File fileToSave = fileChooser.getSelectedFile();
-				}
-			}
-		});
+
 		
-		JButton btnJson = new JButton("Save to JSON");
-        
-        panSouth.add(btnSave);
-		panSouth.add(btnJson);
-        c.add(panSouth, BorderLayout.SOUTH);
+
 		
 		JPanel panNorth = new JPanel();
 		JTextField urlField = new JTextField("", 20);
@@ -86,13 +73,46 @@ public class WebScraperInterface extends JFrame implements ActionListener {
 		btnFetch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String addr = urlField.getText();
-				try {
-					URL link = new URL(addr);
-				} catch (Exception ex) {
-					
+				ArrayList<Weather>  currentWeather = WeatherReader.getWeatherList(addr);
+				text.setText(WeatherWriter.writeWeatherToScreen(currentWeather));
+
+			}
+		});
+
+		JButton btnSave = new JButton("Save to text");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Specify a file to save");
+				int selection = fileChooser.showSaveDialog(c);
+				if (selection == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+					String addr = urlField.getText();
+					ArrayList<Weather>  currentWeather = WeatherReader.getWeatherList(addr);
+					WeatherWriter.writeWeatherToTextFile(currentWeather, fileToSave);
 				}
 			}
 		});
+
+		JButton btnJson = new JButton("Save to JSON");
+		btnJson.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Specify a file to save");
+				int selection = fileChooser.showSaveDialog(c);
+				if (selection == JFileChooser.APPROVE_OPTION) {
+					File fileToSave = fileChooser.getSelectedFile();
+					String addr = urlField.getText();
+					ArrayList<Weather>  currentWeather = WeatherReader.getWeatherList(addr);
+					WeatherWriter.writeWeatherToJSON(currentWeather, fileToSave);
+				}
+			}
+		});
+
+		panSouth.add(btnSave);
+		panSouth.add(btnJson);
+		c.add(panSouth, BorderLayout.SOUTH);
+
 		panNorth.add(lblUrl);
 		panNorth.add(urlField);
 		panNorth.add(btnFetch);
@@ -100,10 +120,10 @@ public class WebScraperInterface extends JFrame implements ActionListener {
 		c.add(panNorth, BorderLayout.NORTH);
 		
         text = new JTextArea();
-        Font f = new Font("Monospaced",Font.BOLD,24);
+        Font f = new Font("Monospaced",Font.BOLD,12);
         text.setFont(f);
         text.setEditable(false);
-        text.setText("Data goes here");
+
         c.add(text,BorderLayout.CENTER);
 		
         setupMenu();

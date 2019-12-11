@@ -9,7 +9,7 @@ public class Weather implements Serializable {
      * <p>Weather Class that holds website weather data</p>
      */
     private String locationDescription,
-            cDescription, fahrenheit, celsius, cHumidity,
+            cDescription, cFahrenheit, cCelsius, cHumidity,
             cWindSpeed, cBarometer, cDewpoint,
             cVisibility, cWindChill, cLastUpdate;
 
@@ -18,8 +18,8 @@ public class Weather implements Serializable {
     public Weather() {
         this.locationDescription = "";
         this.cDescription = "";
-        this.fahrenheit = "";
-        this.celsius = "";
+        this.cFahrenheit = "";
+        this.cCelsius = "";
         this.cHumidity = "";
         this.cWindSpeed = "";
         this.cBarometer = "";
@@ -30,11 +30,11 @@ public class Weather implements Serializable {
 
     }
 
-    public Weather(String locationDescription, String cDescription, String fahrenheit, String celsius, String cHumidity, String cWindSpeed, String cBarometer, String cDewpoint, String cVisibility, String cWindChill, String cLastUpdate) {
+    public Weather(String locationDescription, String cDescription, String cFahrenheit, String celsius, String cHumidity, String cWindSpeed, String cBarometer, String cDewpoint, String cVisibility, String cWindChill, String cLastUpdate) {
         this.locationDescription = locationDescription;
         this.cDescription = cDescription;
-        this.fahrenheit = fahrenheit;
-        this.celsius = celsius;
+        this.cFahrenheit = cFahrenheit;
+        this.cCelsius = celsius;
         this.cHumidity = cHumidity;
         this.cWindSpeed = cWindSpeed;
         this.cBarometer = cBarometer;
@@ -56,11 +56,11 @@ public class Weather implements Serializable {
     }
 
     public String getcFahrenheit() {
-        return fahrenheit;
+        return cFahrenheit;
     }
 
     public String getcCelsius() {
-        return celsius;
+        return cCelsius;
     }
 
     public String getcHumidity() {
@@ -103,11 +103,11 @@ public class Weather implements Serializable {
     }
 
     public void setFahrenheit(String fahrenheit) {
-        this.fahrenheit = fahrenheit;
+        this.cFahrenheit = fahrenheit;
     }
 
     public void setcCelsius(String celsius) {
-        this.celsius = celsius;
+        this.cCelsius = celsius;
     }
 
     public void setcHumidity(String cHumidity) {
@@ -145,18 +145,17 @@ public class Weather implements Serializable {
      */
     @Override
     public String toString() {
-        return "Weather{" +
-                "locationDescription='" + locationDescription + '\'' +
-                ", cDescription='" + cDescription + '\'' +
-                ", fahrenheit='" + fahrenheit + '\'' +
-                ", celsius='" + celsius + '\'' +
-                ", cHumidity='" + cHumidity + '\'' +
-                ", cWindSpeed='" + cWindSpeed + '\'' +
-                ", cBarometer='" + cBarometer + '\'' +
-                ", cDewpoint='" + cDewpoint + '\'' +
-                ", cVisibility='" + cVisibility + '\'' +
-                ", cWindChill='" + cWindChill + '\'' +
-                ", cLastUpdate='" + cLastUpdate + '\'' +
-                '}';
+        return String.format(
+                "Location Description:    %-25s\n"
+                        + "Weather Description:     %-15s\n"
+                        + "Fahrenheit:              %-25s\n"
+                        + "Celsius:                %-25s\n"
+                        + "Humidity:                %-25s\n"
+                        + "Wind Speed:              %-25s\n"
+                        + "Barometer:               %-25s\n"
+                        + "Dewpoint:                %-25s\n"
+                        + "Visibility:              %-25s\n"
+                        + "Wind Chill:              %-25s\n"
+                        + "Last Update:             %-25s\n\n", this.getLocationDescription(), this.getcDescription(), this.getcFahrenheit(), this.getcCelsius(), this.getcHumidity(), this.getcWindSpeed(), this.getcBarometer(), this.getcDewpoint(), this.getcVisibility(), this.getcWindChill(), this.getcLastUpdate());
     }
 }

@@ -2,6 +2,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -11,23 +12,16 @@ public class WeatherWriter {
     /**
     @author: Juan Maturino
     @return : void
-    @param : Weather
+    @param : Weather ArrayList
             <p>writes current Weather data to screen</p>
      */
-    public static void writeWeatherToScreen(Weather wr) {
-        String formattedMember = String.format(
-                          "Location Description:    %-25s\n"
-                        + "Weather Description:     %-15s\n"
-                        + "Fahrenheit:              %-25s\n"
-                        + "Celsius:                %-25s\n"
-                        + "Humidity:                %-25s\n"
-                        + "Wind Speed:              %-25s\n"
-                        + "Barometer:               %-25s\n"
-                        + "Dewpoint:                %-25s\n"
-                        + "Visibility:              %-25s\n"
-                        + "Wind Chill:              %-25s\n"
-                        + "Last Update:             %-25s\n", wr.getLocationDescription(), wr.getcDescription(), wr.getcFahrenheit(), wr.getcCelsius(), wr.getcHumidity(), wr.getcWindSpeed(), wr.getcBarometer(), wr.getcDewpoint(), wr.getcVisibility(), wr.getcWindChill(), wr.getcLastUpdate());
-        System.out.println(formattedMember);
+    public static String writeWeatherToScreen(ArrayList<Weather> weather) {
+        String formattedWeather = "\t\tCURRENT WEATHER\n\t\t_______________\n\n";
+
+        for (Weather wr : weather) { formattedWeather += wr.toString();        }
+
+        return formattedWeather;
+
     }
 
 
@@ -35,12 +29,12 @@ public class WeatherWriter {
      * @author: Juan Maturino
      * @return : Boolean
      * @param : Weather object and filename
-     * <p>writes weather data to text file in JSON format</p>
+     * @param filename
      */
-    public static boolean writeWeatherToTextFile(ArrayList<Weather> weather, String filename) {
+    public static boolean writeWeatherToTextFile(ArrayList<Weather> weather, File filename) {
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
-
+            pw.println("\t\tCURRENT WEATHER\n\t\t_______________\n\n");
             for (Weather w : weather) {
                 pw.println(w);
             }
@@ -56,10 +50,11 @@ public class WeatherWriter {
     /**
      @author: Juan Maturino
      @return : Boolean
-     @param : Weather objects and filename
-     <p>writes weather data to JSON format</p>
+      * @param : Weather objects and filename
+      <p>writes weather data to JSON format</p>
+     * @param filename
      */
-    public static boolean writeWeatherToJSON(ArrayList<Weather> weather, String filename) {
+    public static boolean writeWeatherToJSON(ArrayList<Weather> weather, File filename) {
         try {
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename)));
             JSONArray array = new JSONArray();
@@ -70,8 +65,8 @@ public class WeatherWriter {
                 obj = new JSONObject();
                 obj.put("Location", cWeather.getLocationDescription());
                 obj.put("cDescription", cWeather.getcDescription());
-                obj.put("cHigh", cWeather.getcFahrenheit());
-                obj.put("cLow", cWeather.getcCelsius());
+                obj.put("cFahrenheit", cWeather.getcFahrenheit());
+                obj.put("cCelsius", cWeather.getcCelsius());
                 obj.put("cHumidity", cWeather.getcHumidity());
                 obj.put("cWindSpeed", cWeather.getcWindSpeed());
                 obj.put("cBarometer", cWeather.getcBarometer());
